@@ -1,37 +1,49 @@
+# Michael Long, Gennadii Sytov -- CS494 -- Client Application -- Server Class
+
+# Imports / Constants
 from socket import AF_INET, socket, SOCK_STREAM
 from threading import Thread
-#import select
+DEFAULT = 1080
+BUFFER = 1024
 
-def receive():
-    """Handles receiving of messages."""
-    while True:
-        try:
-            msg = client_socket.recv(BUFSIZ).decode("utf8")
-            print(f'{msg}')
-        except OSError:  # Possibly client has left the chat.
-            break
+# Class: server
+# Designed to handle each of the server interactions for the client
+class client_handler():
 
-HOST = "127.0.0.1"
-PORT = 1234
+    # Init
+    def __init__(self, host, port):
+        self.host = host
+        self.port = port
+        self.address = (host, port)
+        self.client_socket = socket(AF_INET, SOCK_STREAM)
+        self.client_socket.connect(self.address)
+        self.receive_thread = Thread(target=self.receive)
+        self.receive_thread.start()
 
-BUFSIZ = 1024
-ADDR = (HOST, PORT)
+    # Handle a new instance of a message
+    def receive(self): 
+        self.client_socket = socket(AF_INET, SOCK_STREAM)
+        self.client_socket.connect(self.address)
 
-client_socket = socket(AF_INET, SOCK_STREAM)
-client_socket.connect(ADDR)
+        while True:
+            try:
+                msg = self.client_socket.recv(BUFFER).decode("utf8")
+                print(f'{msg}')
+            except OSError: 
+                break
 
-receive_thread = Thread(target=receive)
-receive_thread.start()
+    # General listener
+    def main_loop(self):
 
-while True:
-    message = input()
+        while True:
+            message = input()
 
-    if message:
-        if message == "/quit":
-            message = message.encode('utf-8')
-            client_socket.send(message)
-            client_socket.close()
-            break
-        else:    
-            message = message.encode('utf-8')
-            client_socket.send(message)
+            if message:
+                if message == "/quit":
+                    message = message.encode('utf-8')
+                    self.client_socket.send(message)
+                    self.client_socket.close()
+                    break
+                else:    
+                    message = message.encode('utf-8')
+                    self.client_socket.send(message)

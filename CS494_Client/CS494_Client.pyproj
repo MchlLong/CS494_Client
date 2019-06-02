@@ -21,6 +21,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="client.py" />
     <Compile Include="client_gui.py">
       <SubType>Code</SubType>
     </Compile>
