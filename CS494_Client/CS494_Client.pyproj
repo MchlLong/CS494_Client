@@ -22,9 +22,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="client.py" />
-    <Compile Include="client_gui.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="CS494_Client.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
