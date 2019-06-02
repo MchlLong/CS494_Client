@@ -6,7 +6,6 @@ from threading import Thread
 DEFAULT = 1080
 BUFFER = 1024
 
-# Class: server
 # Designed to handle each of the server interactions for the client
 class client_handler():
 
