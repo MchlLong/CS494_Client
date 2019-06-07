@@ -4,8 +4,7 @@ import client
 
 def main():
 
-    print("Booting Application. . .")
-    user = client.client_handler(host = '71.193.235.33', port = 1080)
+    user = client.client_handler(host = '127.0.0.1', port = 1234)
     user.main_loop()
 
 if __name__ == '__main__':
