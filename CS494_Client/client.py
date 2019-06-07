@@ -1,4 +1,4 @@
-# Michael Long, Gennadii Sytov -- CS494 -- Client Application -- Server Class
+# Michael Long, Gennadii Sytov -- CS494 -- Client Application -- client_handler implementation
 
 # Imports / Constants
 import socket
