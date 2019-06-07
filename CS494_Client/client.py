@@ -1,8 +1,9 @@
 # Michael Long, Gennadii Sytov -- CS494 -- Client Application -- Server Class
 
 # Imports / Constants
-from socket import AF_INET, socket, SOCK_STREAM
-from threading import Thread
+import socket
+import threading
+
 BUFFER = 1024
 
 # Designed to handle each of the server interactions for the client
@@ -15,44 +16,50 @@ class client_handler():
         self.port = port
         self.address = (host, port)
         # Attempt to bind to socket
-        self.client_socket = socket(AF_INET, SOCK_STREAM)
+        self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client_socket.connect(self.address)
         self.connected = True
         # Create a new thread for receiving input
-        self.receive_thread = Thread(target=self.receive)
+        self.receive_thread = threading.Thread(target=self.receive)
         self.receive_thread.start()
 
-    # Handle a new instance of a message
+    # Handle receiving a new instance of a message
     def receive(self): 
 
+        # Receive input from the server
         while self.connected:
+            # Try to send to the server
             try:
-                msg = self.client_socket.recv(BUFFER)
-                scrub = msg.decode("utf8")
-                if scrub == "You have been disconnected from the server.":
-                    print(scrub)
+                # Sanitize input
+                input = self.client_socket.recv(BUFFER)
+                scrub = input.decode("utf8")
+                # Close socket if it receives a disconnect message
+                if scrub == "--disconnect--":
+                    print("You have been disconnected from the server.")
                     self.connected == False
                     return
+                # Print any other message sent from the server
                 else:
                     print(scrub)
 
-                
-            except OSError: 
+            # Handle a server crash    
+            except:
+                print("You have been disconnected due to a Server Crash")
                 self.connected = False
                 return
 
-    # General listener
+    # Send messages
     def main_loop(self):
 
         while self.connected:
 
-            message = input()
+            to_send = input()
 
-            if message:
-                if message == "/quit":
-                    self.client_socket.send(bytes(message, "utf8"))
+            if to_send:
+                if to_send == "/quit":
+                    self.client_socket.send(bytes(to_send, "utf8"))
                     self.client_socket.close()
                     break
                 else:    
-                    message = message.encode('utf-8')
-                    self.client_socket.send(message)
+                    to_send = to_send.encode('utf-8')
+                    self.client_socket.send(to_send)
