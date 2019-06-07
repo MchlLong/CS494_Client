@@ -1,10 +1,12 @@
-# Michael Long, Gennadii Sytov -- CS494 -- Client Application -- client_handler implementation
+# Client Implementation
+# Implementation of the client_handler
+# Michael Long, Gennadii Sytov
+# CS494 Final Project, June 2019
 
 # Imports / Constants
 import socket
 import threading
-
-BUFFER = 1024
+BUFFER = 1024 # Defines the maximum byte size of input from a client
 
 # Designed to handle each of the server interactions for the client
 class client_handler():
@@ -44,7 +46,7 @@ class client_handler():
 
             # Handle a server crash    
             except:
-                print("You have been disconnected due to a Server Crash")
+                print("You have been disconnected")
                 self.connected = False
                 return
 
@@ -53,13 +55,17 @@ class client_handler():
 
         while self.connected:
 
+            # Basic input stream
             to_send = input()
 
+            # Verify the message is valid
             if to_send:
+                # Allow the client to disconnect from the server by closing the socket
                 if to_send == "/quit":
                     self.client_socket.send(bytes(to_send, "utf8"))
                     self.client_socket.close()
-                    break
+                    return
+                # Send a command to the server
                 else:    
                     to_send = to_send.encode('utf-8')
                     self.client_socket.send(to_send)
