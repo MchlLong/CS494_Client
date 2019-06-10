@@ -3,7 +3,7 @@
 # Michael Long, Gennadii Sytov
 # CS494 Final Project, June 2019
 
-import client
+import CS494_Client_Handler as client
 
 def main():
 
