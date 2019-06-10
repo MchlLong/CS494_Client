@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>c43ac107-2ff5-4ed1-9eb0-579f4ef5214d</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>CS494_Client.py</StartupFile>
+    <StartupFile>CS494_Client_Main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,8 +21,8 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="client.py" />
-    <Compile Include="CS494_Client.py" />
+    <Compile Include="CS494_Client_Handler.py" />
+    <Compile Include="CS494_Client_Main.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
